@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Inventario | Hakai Roll Sushi</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f4f4;
+      color: #222;
+    }
+
+    .header {
+      background: #15122b;
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .header p {
+      margin: 8px 0 0;
+      opacity: 0.8;
+    }
+
+    .container {
+      max-width: 750px;
+      margin: 25px auto;
+      padding: 0 15px 40px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 15px;
+      margin-bottom: 6px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    details {
+      background: white;
+      border-radius: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+
+    summary {
+      padding: 18px 20px;
+      cursor: pointer;
+      font-size: 19px;
+      font-weight: bold;
+      list-style: none;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .productos {
+      padding: 0 20px 20px;
+    }
+
+    .producto {
+      display: grid;
+      grid-template-columns: 1fr 120px;
+      gap: 15px;
+      align-items: center;
+      padding: 12px 0;
+      border-top: 1px solid #eee;
+    }
+
+    .producto-info strong {
+      display: block;
+    }
+
+    .unidad {
+      color: #777;
+      font-size: 13px;
+      margin-top: 3px;
+    }
+
+    .producto input {
+      text-align: center;
+    }
+
+    .boton {
+      width: 100%;
+      border: none;
+      background: #25D366;
+      color: white;
+      padding: 17px;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .boton:hover {
+      opacity: 0.9;
+    }
+
+    .aviso {
+      text-align: center;
+      color: #777;
+      font-size: 13px;
+      margin-top: 15px;
+    }
+
+    @media (max-width: 500px) {
+      .producto {
+        grid-template-columns: 1fr 95px;
+      }
+
+      .header h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header">
+    <h1>🍣 Hakai Roll Sushi</h1>
+    <p>Control de Inventario</p>
+  </header>
+
+  <main class="container">
+
+    <!-- DATOS GENERALES -->
+
+    <div class="card">
+
+      <h2>📋 Datos del inventario</h2>
+
+      <label for="sucursal">Sucursal *</label>
+
+      <select id="sucursal">
+        <option value="">Selecciona una sucursal</option>
+        <option value="Palmito">Palmito</option>
+        <option value="Terranova">Terranova</option>
+      </select>
+
+      <label for="responsable">Responsable *</label>
+
+      <input
+        type="text"
+        id="responsable"
+        placeholder="Nombre de quien realiza el inventario"
+      >
+
+      <label for="fecha">Fecha</label>
+
+      <input
+        type="text"
+        id="fecha"
+        readonly
+      >
+
+    </div>
+
+
+    <!-- VEGETALES -->
+
+    <details open>
+
+      <summary>🥑 Vegetales</summary>
+
+      <div class="productos">
+
+        <div class="producto">
+          <div class="producto-info">
+            <strong>Aguacate</strong>
+            <span class="unidad">Pz</span>
+          </div>
+          <input type="number" min="0" step="1"
+                 data-producto="Aguacate" data-unidad="Pz"
+                 placeholder="Cantidad">
+        </div>
+
+        <div class="producto">
+          <div class="producto-info">
+            <strong>Pepino</strong>
+            <span class="unidad">Pz</span>
+          </div>
+          <input type="number" min="0" step="1"
+                 data-producto="Pepino" data-unidad="Pz"
+                 placeholder="Cantidad">
+        </div>
+
+        <div class="producto">
+          <div class="producto-info">
+            <strong>Limón</strong>
+            <span class="unidad">Kg</span>
+          </div>
+          <input type="number" min="0" step="0.1"
+                 data-producto="Limón" data-unidad="Kg"
+                 placeholder="Cantidad">
+        </div>
+
+        <div class="producto">
+          <div class="producto-info">
+            <strong>Cebolla</strong>
+            <span class="unidad">Pz</span>
+          </div>
+          <input type="number" min="0" step="1"
+                 data-producto="Cebolla" data-unidad="Pz"
+                 placeholder="Cantidad">
+        </div>
+
+        <div class="producto">
+          <div class="producto-info">
+            <strong>Zanahoria</strong>
+            <span class="unidad">Pz</span>
+          </div>
+          <input type="number" min="0" step="1"
+                 data-producto="Zanahoria" data-unidad="Pz"
+                 placeholder="Cantidad">
+        </div>
+
+        <div class="producto">
+          <div class="producto-info">
+            <strong>Serrano</strong>
+            <span class="unidad">Pz</span>
+          </div>
+          <input type="number" min="0" step="1"
+                 data-producto="Serrano" data-unidad="Pz"
+                 placeholder="Cantidad">
+        </div>
+
+        <div class="producto">
+          <div class="producto-info">
+            <strong>Chile caribe</strong>
+            <span class="unidad">Pz</span>
+          </div>
+          <input type="number" min="0" step="1"
+                 data-producto="Chile caribe" data-unidad="Pz"
+                 placeholder="Cantidad">
+        </div>
+
+        <div class="producto">
+          <div class="producto-info">
+            <strong>Cebollín</strong>
+            <span class="unidad">Pz</span>
+          </div>
+          <input type="number" min="0" step="1"
+                 data-producto="Cebollín" data-unidad="Pz"
+                 placeholder="Cantidad">
+        </div>
+
+      </div>
+
+    </details>
+
+
+    <!-- PROTEINAS -->
+
+    <details>
+
+      <summary>🥩 Proteínas</summary>
+
+      <div class="productos">
+
+        <div class="producto">
+          <div class="producto-info">
+            <strong>Camarón</strong>
+            <span class="unidad">Kg</span>
+          </div>
+          <input type="number" min="0" step="0.1"
+                 data-producto="Camarón" data-unidad="Kg"
+                 placeholder="Cantidad">
+        </div>
+
+        <div class="producto">
+          <div class="producto-info">
+            <strong>Res</strong>
+            <span class="unidad">Kg</span>
+          </div>
+          <input type="number" min="0" step="0.1"
+                 data-producto="Res" data-unidad="Kg"
+                 placeholder="Cantidad">
+        </div>
+
+        <div class="producto">
+          <div class="producto-info">
+            <strong>Pollo</strong>
+            <span class="unidad">Kg</span>
+          </div>
+          <input type="number" min="0" step="0.1"
+                 data-producto="Pollo" data-unidad="Kg"
+                 placeholder="Cantidad">
+        </div>
+
+        <div class="producto">
+          <div class="producto-info">
+            <strong>Surimi</strong>
+            <span class="unidad">Kg</span>
+          </div>
+          <input type="number" min="0" step="0.1"
+                 data-producto="Surimi" data-unidad="Kg"
+                 placeholder="Cantidad">
+        </div>
+
+      </div>
+
+    </details>
+
+
+    <!-- SALSAS -->
+
+    <details>
+
+      <summary>🥫 Salsas y condimentos</summary>
+
+      <div class="productos" id="salsas"></div>
+
+    </details>
+
+
+    <!-- BEBIDAS -->
+
+    <details>
+
+      <summary>🥤 Bebidas</summary>
+
+      <div class="productos" id="bebidas"></div>
+
+    </details>
+
+
+    <!-- DESECHABLES -->
+
+    <details>
+
+      <summary>🛍️ Plásticos y desechables</summary>
+
+      <div class="productos" id="desechables"></div>
+
+    </details>
+
+
+    <!-- OTROS -->
+
+    <details>
+
+      <summary>🍚 Otros ingredientes</summary>
+
+      <div class="productos" id="otros"></div>
+
+    </details>
+
+
+    <!-- OBSERVACIONES -->
+
+    <div class="card">
+
+      <h2>📝 Observaciones</h2>
+
+      <textarea
+        id="observaciones"
+        placeholder="Escribe aquí cualquier indicación adicional..."
+      ></textarea>
+
+    </div>
+
+
+    <button
+      class="boton"
+      onclick="enviarWhatsApp()"
+    >
+      🟢 Enviar pedido por WhatsApp
+    </button>
+
+    <p class="aviso">
+      Solo se enviarán los productos que tengan una cantidad registrada.
+    </p>
+
+  </main>
+
+
+<script>
+
+/* ===========================
+   PRODUCTOS
+=========================== */
+
+const categorias = {
+
+  salsas: [
+    ["Mayonesa", ""],
+    ["Chipotle", ""],
+    ["Macha", ""],
+    ["Anguila", ""],
+    ["Sriracha", ""],
+    ["Soya", "Lt"],
+    ["Aceite", ""],
+    ["Togadashi", "Paquete"]
+  ],
+
+  bebidas: [
+    ["Té 1 Lt", "Pz"],
+    ["Té 0.5 Lt", "Pz"],
+    ["Coca vidrio", "Pz"],
+    ["Coca 600", "Pz"],
+    ["Garrafón de agua", "Pz"]
+  ],
+
+  desechables: [
+    ["Guantes talla L", "Caja"],
+    ["Guantes talla CH", "Caja"],
+    ["Emplaye", "Rollo"],
+    ["Bolsa negra", ""],
+    ["Papel secante", "Pz"],
+    ["Servilletas", "Paquete"],
+    ["Comandas", "Pz"],
+    ["Vasos soyeros", "Pz"],
+    ["Tapas soyeros", "Pz"]
+  ],
+
+  otros: [
+    ["Arroz", "Kg"],
+    ["Alga", "Paquete"],
+    ["Phila", "Paquete"],
+    ["Chihuahua", "Paquete"]
+  ]
+
+};
+
+
+/* ===========================
+   CREAR PRODUCTOS
+=========================== */
+
+function crearProductos() {
+
+  Object.keys(categorias).forEach(categoria => {
+
+    const contenedor = document.getElementById(categoria);
+
+    categorias[categoria].forEach(producto => {
+
+      const nombre = producto[0];
+      const unidad = producto[1];
+
+      const div = document.createElement("div");
+
+      div.className = "producto";
+
+      div.innerHTML = `
+        <div class="producto-info">
+          <strong>${nombre}</strong>
+          <span class="unidad">${unidad || "Cantidad"}</span>
+        </div>
+
+        <input
+          type="number"
+          min="0"
+          step="0.1"
+          data-producto="${nombre}"
+          data-unidad="${unidad}"
+          placeholder="Cantidad"
+        >
+      `;
+
+      contenedor.appendChild(div);
+
+    });
+
+  });
+
+}
+
+crearProductos();
+
+
+/* ===========================
+   FECHA AUTOMÁTICA
+=========================== */
+
+const hoy = new Date();
+
+document.getElementById("fecha").value =
+  hoy.toLocaleDateString(
+    "es-MX",
+    {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric"
+    }
+  );
+
+
+/* ===========================
+   WHATSAPP
+=========================== */
+
+function enviarWhatsApp() {
+
+  const sucursal =
+    document.getElementById("sucursal").value;
+
+  const responsable =
+    document.getElementById("responsable").value.trim();
+
+  const fecha =
+    document.getElementById("fecha").value;
+
+  const observaciones =
+    document.getElementById("observaciones").value.trim();
+
+
+  /* VALIDACIONES */
+
+  if (!sucursal) {
+
+    alert("Selecciona una sucursal.");
+
+    return;
+
+  }
+
+
+  if (!responsable) {
+
+    alert("Escribe el nombre del responsable.");
+
+    return;
+
+  }
+
+
+  const inputs =
+    document.querySelectorAll("[data-producto]");
+
+
+  let productos = [];
+
+
+  inputs.forEach(input => {
+
+    const cantidad =
+      parseFloat(input.value);
+
+    if (!isNaN(cantidad) && cantidad > 0) {
+
+      productos.push({
+
+        nombre:
+          input.dataset.producto,
+
+        cantidad:
+          input.value,
+
+        unidad:
+          input.dataset.unidad
+
+      });
+
+    }
+
+  });
+
+
+  if (productos.length === 0) {
+
+    alert(
+      "Ingresa al menos un producto para realizar el pedido."
+    );
+
+    return;
+
+  }
+
+
+  /* ===========================
+     CREAR MENSAJE
+  =========================== */
+
+  let mensaje =
+
+`🛒 *PEDIDO DE INVENTARIO*
+
+🍣 *Hakai Roll Sushi*
+
+📍 *Sucursal:* ${sucursal}
+👤 *Responsable:* ${responsable}
+📅 *Fecha:* ${fecha}
+
+📦 *PRODUCTOS A COMPRAR*
+`;
+
+
+  productos.forEach(producto => {
+
+    mensaje +=
+      `\n• ${producto.nombre}: ${producto.cantidad}`;
+
+    if (producto.unidad) {
+
+      mensaje +=
+        ` ${producto.unidad}`;
+
+    }
+
+  });
+
+
+  if (observaciones) {
+
+    mensaje +=
+
+`\n\n📝 *Observaciones:*
+${observaciones}`;
+
+  }
+
+
+  mensaje +=
+
+`\n\n✅ Fin del pedido`;
+
+
+  /* ===========================
+     NÚMERO WHATSAPP
+  =========================== */
+
+  const telefono =
+    "526671801365";
+
+
+  const url =
+    `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
+
+
+  window.open(
+    url,
+    "_blank"
+  );
+
+}
+
+</script>
+
+</body>
+</html>
